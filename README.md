@@ -6,10 +6,11 @@ An opinionated toast component for Svelte 5. It's a port of [Sonner](https://son
 
 ## Installation
 
-The package isn't on npm yet, install it from GitHub:
+The package isn't on npm yet. Install the prebuilt package from the `release` branch, which CI keeps in sync with `main`:
 
 ```bash
-npm install github:TiberiusNemesis/sonner-sv
+npm install github:TiberiusNemesis/sonner-sv#release
+pnpm add github:TiberiusNemesis/sonner-sv#release
 ```
 
 Requires Svelte `5.29` or newer.
