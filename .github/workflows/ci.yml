@@ -21,3 +21,34 @@ jobs:
       - run: pnpm build
       - run: pnpm exec playwright install --with-deps chromium webkit
       - run: pnpm test
+
+  # Publishes the built package to the `release` branch, so it can be installed from GitHub without a build step
+  release:
+    needs: test
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/checkout@v7
+        with:
+          ref: release
+          path: release
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm exec svelte-kit sync && pnpm exec svelte-package
+      - name: Update the release branch
+        run: |
+          find release -mindepth 1 -maxdepth 1 ! -name .git -exec rm -rf {} +
+          cp -r dist README.md LICENSE release/
+          node -e 'const p = require("./package.json"); delete p.scripts; delete p.devDependencies; delete p.packageManager; require("fs").writeFileSync("release/package.json", JSON.stringify(p, null, "\t") + "\n")'
+          cd release
+          git add -A
+          git diff --cached --quiet && exit 0
+          git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" commit -m "Release ${GITHUB_SHA::7}"
+          git push
