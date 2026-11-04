@@ -7,12 +7,8 @@
 	import { isAction, type ToastClasses, type ToastIcons, type ToastProps } from './types.js';
 	import { cn, getDefaultSwipeDirections } from './utils.js';
 
-	// Default lifetime of a toast (in ms)
 	const TOAST_LIFETIME = 4000;
-
-	// Threshold to dismiss a toast
 	const SWIPE_THRESHOLD = 45;
-
 	// Equal to exit animation duration
 	const TIME_BEFORE_UNMOUNT = 200;
 
@@ -75,7 +71,6 @@
 	const [y, x] = $derived(position.split('-'));
 	const toastsHeightBefore = $derived(
 		heights.reduce((prev, curr, reducerIndex) => {
-			// Calculate offset up until current toast
 			if (reducerIndex >= heightIndex) {
 				return prev;
 			}
@@ -131,7 +126,6 @@
 	});
 
 	$effect(() => {
-		// Keep height up to date with the content in case it updates
 		void [title, description, jsx, action, cancel];
 		if (!mounted) return;
 
@@ -180,9 +174,7 @@
 		let timeoutId: ReturnType<typeof setTimeout>;
 
 		if (expanded || interacting || documentHidden.current) {
-			// Pause the timer on each hover
 			if (lastCloseTimerStartTime < closeTimerStartTime) {
-				// Get the elapsed time since the timer started
 				const elapsedTime = Date.now() - closeTimerStartTime;
 
 				remainingTime = remainingTime - elapsedTime;
@@ -215,7 +207,7 @@
 	});
 
 	function onpointerdown(event: PointerEvent) {
-		if (event.button === 2) return; // Return early on right click
+		if (event.button === 2) return; // right click
 		if (disabled || !dismissible) return;
 		dragStartTime = Date.now();
 		offsetBeforeRemove = offset;
@@ -276,7 +268,6 @@
 		const yDelta = event.clientY - pointerStart.y;
 		const xDelta = event.clientX - pointerStart.x;
 
-		// Determine swipe direction if not already locked
 		if (!swipeDirection && (Math.abs(xDelta) > 1 || Math.abs(yDelta) > 1)) {
 			swipeDirection = Math.abs(xDelta) > Math.abs(yDelta) ? 'x' : 'y';
 		}
@@ -289,9 +280,7 @@
 			return 1 / (1.5 + factor);
 		};
 
-		// Only apply swipe in the locked direction
 		if (swipeDirection === 'y') {
-			// Handle vertical swipes
 			if (swipeDirections.includes('top') || swipeDirections.includes('bottom')) {
 				if (
 					(swipeDirections.includes('top') && yDelta < 0) ||
@@ -299,14 +288,12 @@
 				) {
 					amount.y = yDelta;
 				} else {
-					// Smoothly transition to dampened movement
 					const dampenedDelta = yDelta * getDampening(yDelta);
-					// Ensure we don't jump when transitioning to dampened movement
+					// Never let the dampened value overshoot the raw one
 					amount.y = Math.abs(dampenedDelta) < Math.abs(yDelta) ? dampenedDelta : yDelta;
 				}
 			}
 		} else if (swipeDirection === 'x') {
-			// Handle horizontal swipes
 			if (swipeDirections.includes('left') || swipeDirections.includes('right')) {
 				if (
 					(swipeDirections.includes('left') && xDelta < 0) ||
@@ -314,9 +301,8 @@
 				) {
 					amount.x = xDelta;
 				} else {
-					// Smoothly transition to dampened movement
 					const dampenedDelta = xDelta * getDampening(xDelta);
-					// Ensure we don't jump when transitioning to dampened movement
+					// Never let the dampened value overshoot the raw one
 					amount.x = Math.abs(dampenedDelta) < Math.abs(xDelta) ? dampenedDelta : xDelta;
 				}
 			}

@@ -45,10 +45,8 @@ test.describe('Basic functionality', () => {
 	test('promise toast with extended configuration', async ({ page }) => {
 		await page.getByTestId('extended-promise').click();
 
-		// Check loading state
 		await expect(page.getByText('Loading...')).toHaveCount(1);
 
-		// Check success state with custom message and description
 		await expect(page.getByText('Sonner toast has been added')).toHaveCount(1);
 		await expect(page.getByText('Custom description for the Success state')).toHaveCount(1);
 
@@ -59,17 +57,14 @@ test.describe('Basic functionality', () => {
 	test('promise toast with extended error configuration', async ({ page }) => {
 		await page.getByTestId('extended-promise-error').click();
 
-		// Check loading state
 		await expect(page.getByText('Loading...')).toHaveCount(1);
 
-		// Check error state
 		await expect(page.getByText('An error occurred')).toHaveCount(1);
 
-		// Verify action button is present
 		const actionButton = page.getByText('Retry');
 		await expect(actionButton).toHaveCount(1);
 
-		// Click retry button and verify it doesn't close the toast (due to preventDefault)
+		// The action calls preventDefault, so the toast stays open
 		await actionButton.click();
 		await expect(page.getByText('An error occurred')).toHaveCount(1);
 	});
@@ -77,7 +72,6 @@ test.describe('Basic functionality', () => {
 	test('promise toast with Error object rejection', async ({ page }) => {
 		await page.getByTestId('error-promise').click();
 
-		// Check error state shows the error message correctly
 		await expect(page.getByText('Error Raise: Error: Not implemented')).toHaveCount(1);
 	});
 
@@ -123,19 +117,15 @@ test.describe('Basic functionality', () => {
 	test('toast is not removed when hovered', async ({ page }) => {
 		await page.getByTestId('default-button').click();
 
-		// Wait for toast to be visible first
 		await expect(page.locator('[data-sonner-toast]')).toBeVisible();
 
-		// Hover the toast
 		await page.hover('[data-sonner-toast]');
 
-		// Wait a bit to ensure hover is registered
 		await page.waitForTimeout(100);
 
-		// Create a longer timeout to verify toast persists
+		// Longer than the default 4s duration
 		await page.waitForTimeout(5000);
 
-		// Verify toast is still visible
 		await expect(page.locator('[data-sonner-toast]')).toBeVisible();
 		await expect(page.locator('[data-sonner-toast]')).toHaveCount(1);
 	});
@@ -182,10 +172,8 @@ test.describe('Basic functionality', () => {
 		await page.mouse.move(startX, startY);
 		await page.mouse.down();
 
-		// Small initial movement to trigger drag
 		await page.mouse.move(startX, startY + 20, { steps: 5 });
 
-		// Main swipe movement
 		await page.mouse.move(startX, startY + 300, { steps: 10 });
 		await page.mouse.up();
 

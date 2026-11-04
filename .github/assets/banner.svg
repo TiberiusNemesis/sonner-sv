@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="320" viewBox="0 0 1280 320" fill="none" role="img" aria-label="sonner-sv">
+<rect x="0.5" y="0.5" width="1279" height="319" rx="16" fill="#111111" stroke="#262626"/>
+<text x="96" y="168" fill="#fafafa" font-family="ui-sans-serif, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="88" font-weight="700" letter-spacing="-3">sonner-sv</text>
+<text x="100" y="218" fill="#a3a3a3" font-family="ui-sans-serif, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="28">Sonner toasts for Svelte 5</text>
+<rect x="786" y="74" width="332" height="56" rx="8" fill="#ffffff" fill-opacity="0.35"/>
+<rect x="772" y="98" width="360" height="62" rx="8" fill="#ffffff" fill-opacity="0.6"/>
+<rect x="756" y="124" width="392" height="76" rx="8" fill="#ffffff" stroke="#ededed"/>
+<circle cx="788" cy="162" r="10" fill="#16a34a"/>
+<path d="M783.5 162.5l3 3 6-6.5" stroke="#ffffff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="812" y="169" fill="#171717" font-family="ui-sans-serif, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="20" font-weight="500">Event has been created</text>
+</svg>

@@ -1,9 +1,6 @@
 import type { Offset, SwipeDirection, ToasterProps } from './types.js';
 
-// Viewport padding
 const VIEWPORT_OFFSET = '24px';
-
-// Mobile viewport padding
 const MOBILE_VIEWPORT_OFFSET = '16px';
 
 export function cn(...classes: (string | undefined)[]) {

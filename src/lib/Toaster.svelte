@@ -7,13 +7,8 @@
 	import type { HeightT, Position, ToasterProps, ToastT, ToastToDismiss } from './types.js';
 	import { assignOffset, getDocumentDirection } from './utils.js';
 
-	// Visible toasts amount
 	const VISIBLE_TOASTS_AMOUNT = 3;
-
-	// Default toast width
 	const TOAST_WIDTH = 356;
-
-	// Default gap between toasts
 	const GAP = 14;
 
 	let {
@@ -102,7 +97,6 @@
 
 			const indexOfExistingToast = toasts.findIndex((t) => t.id === toast.id);
 
-			// Update the toast if it already exists
 			if (indexOfExistingToast !== -1) {
 				toasts = [
 					...toasts.slice(0, indexOfExistingToast),
@@ -117,7 +111,6 @@
 	);
 
 	$effect(() => {
-		// Ensure expanded is always false when no toasts are present / only one left
 		if (toasts.length <= 1) {
 			expanded = false;
 		}
