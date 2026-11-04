@@ -9,7 +9,6 @@ export function useSonner() {
             return;
         }
         const indexOfExistingToast = toasts.findIndex((t) => t.id === toast.id);
-        // Update the toast if it already exists
         if (indexOfExistingToast !== -1) {
             toasts = [
                 ...toasts.slice(0, indexOfExistingToast),
